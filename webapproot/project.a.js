@@ -1002,7 +1002,7 @@ dojo.declare("GenusHealthAdmin", wm.Application, {
 	"name": "", 
 	"phoneGapLoginPage": "Login", 
 	"phoneMain": "", 
-	"projectSubVersion": "Alpha33", 
+	"projectSubVersion": "Alpha34", 
 	"projectVersion": 1, 
 	"studioVersion": "6.5.1.Release", 
 	"tabletMain": "", 
