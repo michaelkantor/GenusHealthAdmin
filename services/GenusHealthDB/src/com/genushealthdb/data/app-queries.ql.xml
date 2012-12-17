@@ -1,0 +1,34 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <meta attribute="@design.default-queries"/>
+    <query name="synopsisQuery">
+        SELECT conditionType as conditionType, count(*) as count FROM UserSessions GROUP BY  conditionType
+    </query>
+    <query name="groupByDiagnosis">
+        <query-param name="conditionType" type="java.lang.String"/>
+        SELECT modelDiagnosis as modelDiagnosis, count(*) as count FROM UserSessions
+WHERE conditionType = :conditionType
+GROUP BY  modelDiagnosis
+    </query>
+    <query name="groupByConditionTypeQuery">
+        SELECT conditionType as conditionType, count(*) as count FROM UserSessions GROUP BY  conditionType
+    </query>
+    <query name="getMaxNodeId">
+        SELECT MAX(nodeId)+1as newId from Node
+    </query>
+    <query name="getJsonFilesByConditionType">
+        <query-param name="conditionType" type="java.lang.String"/>
+        SELECT text as text FROM Jsonfiles WHERE name=:conditionType ORDER BY modifiedAt DESC
+    </query>
+    <query name="getConditionList">
+        FROM NodeGroup GROUP BY name
+    </query>
+    <query name="groupByNodeId">
+        <query-param name="conditionType" type="java.lang.String"/>
+        <query-param name="modelDiagnosis" type="java.lang.String"/>
+        SELECT node.nodeId as nodeId, count(*) as count FROM UserSessions
+WHERE conditionType = :conditionType AND
+modelDiagnosis = :modelDiagnosis
+GROUP BY  node.nodeId
+    </query>
+</hibernate-mapping>

@@ -1,0 +1,24 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.genushealthdb.data.Feedbackquestions" table="feedbackquestions" dynamic-insert="false" dynamic-update="false">
+        <id name="feedbackquestionid" type="integer">
+            <column name="feedbackquestionid"/>
+            <generator class="identity"/>
+        </id>
+        <property name="question" type="string">
+            <column name="question" not-null="true"/>
+        </property>
+        <property name="ordernumber" type="integer">
+            <column name="ordernumber" not-null="true"/>
+        </property>
+        <many-to-one name="dispositions" class="com.genushealthdb.data.Dispositions" cascade="none">
+            <column name="dispositionid" not-null="true"/>
+        </many-to-one>
+        <set name="feedbackresponsess" inverse="true" cascade="">
+            <key>
+                <column name="feedbackquestionid" not-null="true"/>
+            </key>
+            <one-to-many class="com.genushealthdb.data.Feedbackresponses"/>
+        </set>
+    </class>
+</hibernate-mapping>

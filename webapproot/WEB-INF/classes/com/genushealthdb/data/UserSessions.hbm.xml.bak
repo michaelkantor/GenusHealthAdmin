@@ -1,0 +1,30 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.genushealthdb.data.UserSessions" table="UserSessions" dynamic-insert="false" dynamic-update="false">
+        <id name="sessionId" type="integer">
+            <column name="session_id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="conditionType" type="string">
+            <column name="condition_type"/>
+        </property>
+        <property name="modelDiagnosis" type="string">
+            <column name="model_diagnosis"/>
+        </property>
+        <property name="patientId" type="string">
+            <column name="patient_id"/>
+        </property>
+        <property name="createdAt" type="timestamp">
+            <column name="created_at" length="19"/>
+        </property>
+        <property name="updatedAt" type="timestamp">
+            <column name="updated_at" length="19" not-null="true"/>
+        </property>
+        <property name="feedback" type="string">
+            <column name="feedback"/>
+        </property>
+        <many-to-one name="node" class="com.genushealthdb.data.Node" cascade="none">
+            <column name="final_node_id"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

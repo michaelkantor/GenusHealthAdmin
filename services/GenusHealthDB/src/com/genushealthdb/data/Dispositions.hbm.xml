@@ -1,0 +1,30 @@
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.genushealthdb.data.Dispositions" table="Dispositions" dynamic-insert="false" dynamic-update="false">
+        <id name="dispositionId" type="integer">
+            <column name="disposition_id"/>
+            <generator class="identity"/>
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="127"/>
+        </property>
+        <property name="text" type="string">
+            <column name="text" length="65535"/>
+        </property>
+        <property name="createdAt" type="timestamp">
+            <column name="created_at" length="19" not-null="true"/>
+        </property>
+        <property name="modifiedAt" type="timestamp">
+            <column name="modified_at" length="19" not-null="true"/>
+        </property>
+        <property name="displayName" type="string">
+            <column name="display_name" length="31"/>
+        </property>
+        <set name="feedbackquestionss" inverse="true" cascade="">
+            <key>
+                <column name="dispositionid" not-null="true"/>
+            </key>
+            <one-to-many class="com.genushealthdb.data.Feedbackquestions"/>
+        </set>
+    </class>
+</hibernate-mapping>

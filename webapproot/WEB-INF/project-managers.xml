@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<beans xsi:schemaLocation="http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd" xmlns="http://www.springframework.org/schema/beans" xmlns:cloud="http://schema.cloudfoundry.org/spring" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <bean class="com.wavemaker.runtime.service.TypeManager" parent="typeManagerBase" scope="singleton" id="typeManager">
+        <property name="types">
+            <map merge="true">
+                <entry key="GenusHealthDB">
+                    <list>
+                        <value>com.genushealthdb.data.Dispositions</value>
+                        <value>com.genushealthdb.data.Feedbackquestions</value>
+                        <value>com.genushealthdb.data.Feedbackresponses</value>
+                        <value>com.genushealthdb.data.Jsonfiles</value>
+                        <value>com.genushealthdb.data.Messages</value>
+                        <value>com.genushealthdb.data.Node</value>
+                        <value>com.genushealthdb.data.NodeGroup</value>
+                        <value>com.genushealthdb.data.UserSessions</value>
+                        <value>com.genushealthdb.data.output.GroupByDiagnosisRtnType</value>
+                        <value>com.genushealthdb.data.output.GetMaxNodeIdRtnType</value>
+                        <value>com.genushealthdb.data.output.GroupByConditionTypeQueryRtnType</value>
+                        <value>com.genushealthdb.data.output.GetJsonFilesByConditionTypeRtnType</value>
+                        <value>com.genushealthdb.data.output.SynopsisQueryRtnType</value>
+                        <value>com.genushealthdb.data.output.GroupByNodeIdRtnType</value>
+                    </list>
+                </entry>
+                <entry key="securityService">
+                    <list/>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>

@@ -1,0 +1,14 @@
+.HideChildren ol {
+    display: none;
+}
+
+li.HasChildren.HideChildren:before {
+    content: "+ ";
+}
+li.HasChildren:before {
+    content: "- ";
+}
+li > .Anchor {
+    text-decoration: underline;
+    cursor: pointer;
+}
