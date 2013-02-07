@@ -44,15 +44,15 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.Integer"
 				},
-				"feedbackquestionss": {
+				"feedbackquestionset": {
 					"exclude": [],
 					"fieldOrder": 6,
 					"fieldSubType": null,
 					"include": [],
-					"isList": true,
+					"isList": false,
 					"noChange": [],
 					"required": false,
-					"type": "com.genushealthdb.data.Feedbackquestions"
+					"type": "com.genushealthdb.data.Feedbackquestionset"
 				},
 				"modifiedAt": {
 					"exclude": [],
@@ -91,16 +91,6 @@ wm.types = {
 		},
 		"com.genushealthdb.data.Feedbackquestions": {
 			"fields": {
-				"dispositions": {
-					"exclude": [],
-					"fieldOrder": 3,
-					"fieldSubType": null,
-					"include": [],
-					"isList": false,
-					"noChange": [],
-					"required": true,
-					"type": "com.genushealthdb.data.Dispositions"
-				},
 				"feedbackquestionid": {
 					"exclude": ["insert"],
 					"fieldOrder": 0,
@@ -111,9 +101,19 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.Integer"
 				},
-				"feedbackresponsess": {
+				"feedbackquestionset": {
 					"exclude": [],
 					"fieldOrder": 4,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "com.genushealthdb.data.Feedbackquestionset"
+				},
+				"feedbackresponsess": {
+					"exclude": [],
+					"fieldOrder": 3,
 					"fieldSubType": null,
 					"include": [],
 					"isList": true,
@@ -132,6 +132,53 @@ wm.types = {
 					"type": "java.lang.Integer"
 				},
 				"question": {
+					"exclude": [],
+					"fieldOrder": 1,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "java.lang.String"
+				}
+			},
+			"internal": false,
+			"liveService": true,
+			"service": "GenusHealthDB"
+		},
+		"com.genushealthdb.data.Feedbackquestionset": {
+			"fields": {
+				"dispositionss": {
+					"exclude": [],
+					"fieldOrder": 3,
+					"fieldSubType": null,
+					"include": [],
+					"isList": true,
+					"noChange": [],
+					"required": false,
+					"type": "com.genushealthdb.data.Dispositions"
+				},
+				"feedbackquestionsetid": {
+					"exclude": ["insert"],
+					"fieldOrder": 0,
+					"fieldSubType": null,
+					"include": ["delete", "read", "update"],
+					"isList": false,
+					"noChange": ["delete", "read", "update"],
+					"required": true,
+					"type": "java.lang.Integer"
+				},
+				"feedbackquestionss": {
+					"exclude": [],
+					"fieldOrder": 2,
+					"fieldSubType": null,
+					"include": [],
+					"isList": true,
+					"noChange": [],
+					"required": false,
+					"type": "com.genushealthdb.data.Feedbackquestions"
+				},
+				"name": {
 					"exclude": [],
 					"fieldOrder": 1,
 					"fieldSubType": null,

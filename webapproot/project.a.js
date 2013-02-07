@@ -187,7 +187,7 @@ wm.JsonRpcService.smdCache['runtimeService.smd'] = {
 	"serviceType": "JSON-RPC",
 	"serviceURL": "runtimeService.json"
 };
-wm.JsonRpcService.smdCache['wavemakerService.smd'] = {
+wm.JsonRpcService.smdCache['waveMakerService.smd'] = {
 	"methods": [{
 		"name": "echo",
 		"operationType": null,
@@ -297,15 +297,15 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.Integer"
 				},
-				"feedbackquestionss": {
+				"feedbackquestionset": {
 					"exclude": [],
 					"fieldOrder": 6,
 					"fieldSubType": null,
 					"include": [],
-					"isList": true,
+					"isList": false,
 					"noChange": [],
 					"required": false,
-					"type": "com.genushealthdb.data.Feedbackquestions"
+					"type": "com.genushealthdb.data.Feedbackquestionset"
 				},
 				"modifiedAt": {
 					"exclude": [],
@@ -344,16 +344,6 @@ wm.types = {
 		},
 		"com.genushealthdb.data.Feedbackquestions": {
 			"fields": {
-				"dispositions": {
-					"exclude": [],
-					"fieldOrder": 3,
-					"fieldSubType": null,
-					"include": [],
-					"isList": false,
-					"noChange": [],
-					"required": true,
-					"type": "com.genushealthdb.data.Dispositions"
-				},
 				"feedbackquestionid": {
 					"exclude": ["insert"],
 					"fieldOrder": 0,
@@ -364,9 +354,19 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.Integer"
 				},
-				"feedbackresponsess": {
+				"feedbackquestionset": {
 					"exclude": [],
 					"fieldOrder": 4,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "com.genushealthdb.data.Feedbackquestionset"
+				},
+				"feedbackresponsess": {
+					"exclude": [],
+					"fieldOrder": 3,
 					"fieldSubType": null,
 					"include": [],
 					"isList": true,
@@ -385,6 +385,53 @@ wm.types = {
 					"type": "java.lang.Integer"
 				},
 				"question": {
+					"exclude": [],
+					"fieldOrder": 1,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "java.lang.String"
+				}
+			},
+			"internal": false,
+			"liveService": true,
+			"service": "GenusHealthDB"
+		},
+		"com.genushealthdb.data.Feedbackquestionset": {
+			"fields": {
+				"dispositionss": {
+					"exclude": [],
+					"fieldOrder": 3,
+					"fieldSubType": null,
+					"include": [],
+					"isList": true,
+					"noChange": [],
+					"required": false,
+					"type": "com.genushealthdb.data.Dispositions"
+				},
+				"feedbackquestionsetid": {
+					"exclude": ["insert"],
+					"fieldOrder": 0,
+					"fieldSubType": null,
+					"include": ["delete", "read", "update"],
+					"isList": false,
+					"noChange": ["delete", "read", "update"],
+					"required": true,
+					"type": "java.lang.Integer"
+				},
+				"feedbackquestionss": {
+					"exclude": [],
+					"fieldOrder": 2,
+					"fieldSubType": null,
+					"include": [],
+					"isList": true,
+					"noChange": [],
+					"required": false,
+					"type": "com.genushealthdb.data.Feedbackquestions"
+				},
+				"name": {
 					"exclude": [],
 					"fieldOrder": 1,
 					"fieldSubType": null,
@@ -1002,9 +1049,9 @@ dojo.declare("GenusHealthAdmin", wm.Application, {
 	"name": "", 
 	"phoneGapLoginPage": "Login", 
 	"phoneMain": "", 
-	"projectSubVersion": "Alpha34", 
+	"projectSubVersion": "Alpha40", 
 	"projectVersion": 1, 
-	"studioVersion": "6.5.1.Release", 
+	"studioVersion": "6.5.2.Release", 
 	"tabletMain": "", 
 	"theme": "wm_default", 
 	"toastPosition": "br", 
@@ -1024,118 +1071,113 @@ GenusHealthAdmin.extend({
     _end: 0
 });
 GenusHealthAdmin.prototype._css = '';
-wm.Page.extend({
-    loadComponent: function(inName, inParent, inType, inProps, inEvents, inChildren, isSecond) {
-    	if (!this._isDesignLoaded && inProps.deviceType && wm.device && dojo.indexOf(inProps.deviceType, wm.device) == -1) {
-			if (djConfig.isDebug) this.warnDroppedWidgets(inName, inProps.deviceType.join(","), inChildren);
-			return;
-		}
-		// Some code for debugging performance; normally skipped
-		if (wm.debugPerformance) {
-			if (inType == "wm.Layout") {
-				if (dojo.isFF) console.groupCollapsed("LOAD COMPONENT " + inType + ": " + inName);
-				else console.group("LOAD COMPONENT " + inType + ": " + inName);
-			}
+if (wm.Splitter) {
+wm.Splitter.extend({
+mousedown: function(e) {
+        this.sizeControl = this.getSizeControl();
+        if (!this.sizeControl)
+            return;
+        var otherControl = this.sizeControl.getIndexInParent() > this.getIndexInParent() ? this.sizeControl.parent.c$[this.sizeControl.getIndexInParent()-2] : this.sizeControl.parent.c$[this.sizeControl.getIndexInParent()+2];
+        //this.size = dojo._getMarginBox(this.sizeNode);
+        //this.containerSize = dojo._getContentBox(this.sizeNode.parentNode);
+        this.size = this.sizeControl.cloneBounds();
+        this.containerSize = this.sizeControl.parent.cloneBounds();
+        this.initialPosition = this.getPosition();
+        this.position = this.getPosition();
+        wm.Splitter.resizer.beginResize(e, this);
 
-			this.startTimerWithName("LoadComponent", inType);
-			this.startTimerWithName("LoadPage", inType);
-		}
+        switch (this.layout) {
+            case "top":
+            case "bottom":
+                this._boundsMax = this.sizeControl.parent.bounds.h - otherControl.getPreferredFitToContentHeight() + this.sizeControl.bounds.h;
+                this._boundsMin = this.sizeControl.getPreferredFitToContentHeight ? this.sizeControl.getPreferredFitToContentHeight() : this.sizeControl.getMinHeightProp();
 
-		var ctor = wm.getObject(inType);
-		if (!ctor) {
-			try {
-				wm.getComponentStructure(inType);
-				ctor = dojo.getObject(inType);
-			} catch (e) {
-				console.info('Error : Page.js trying to get component dynamically-------------> ' + e);
-			}
+                break;
+            case "left":
+            case "right":
+                this._boundsMax = this.sizeControl.parent.bounds.w - otherControl.getPreferredFitToContentWidth() + this.sizeControl.bounds.w;
+                this._boundsMin = this.sizeControl.getPreferredFitToContentWidth ? this.sizeControl.getPreferredFitToContentWidth() : this.sizeControl.getMinWidthProp();
+                break;
+        }
+    }
+});
+}
+wm.Application.extend({
+    doRun: function() {
+        if (wm.isPhonegap) {
+            if (!window["PhoneGap"] && !window["cordova"]) {
+                wm.job("doRun", 100, this, "doRun");
+                return;
+            }
+            /* IFrame added by phonegap build server seems to disrupt touch events */
+            if (document.body.nextSibling && document.body.nextSibling.tagName == "IFRAME") {
+                dojo.destroy(document.body.nextSibling);
+            }
+            dojo["require"]("build.Gzipped.wm_phonegap_misc", true);
+            dojo.forEach(wm.componentFixList._phonegap, function(fix) {
+                try {
+                    fix();
+                } catch(e){}
+            });
+        }
 
-			if (!ctor) {
-				console.debug('Component type "' + inType + '" is not available.');
-				ctor = wm.Box;
-			}
-		}
+    	/* Needs to be here rather than postInit because wm.ServiceVariable not loaded in phonegap build until this point */
+		if (!this._isDesignLoaded) {
 
+            if (wm.serverTimeOffset === undefined) {
+                this.getServerTimeOffset();
+            } else {
+                wm.currentTimeZone = new Date().getTimezoneOffset();
+            }
+            window.setInterval(dojo.hitch(this, "_pollForTimezoneChange"), 10000); //3600000); // once per hour check to see if the timezone has changed
+        }
 
-		// FIXME: this check really needs to go
-		// yuk
-		var props = {};
-		isWidget = (ctor.prototype instanceof wm.Control || ctor.prototype instanceof dijit._Widget);
-		if (isWidget) {
-			var parentNode = (inParent ? inParent.containerNode || inParent.domNode : this.domNode);
-			props = {
-				owner: this,
-				parent: inParent,
-				domNode: parentNode ? null : document.body,
-				parentNode: parentNode
-			};
-		}
+        this.createPageContainer();
+        this.domNode = this.appRoot.domNode;
+        this.reflow();
 
-
-		// props.name should overwrite getUniqueName(inName), which should overwrite inProps.
-		if (!props.owner) {
-			if (inParent && inParent instanceof wm.Layout) props.owner = inParent.owner;
-			else if (inParent) props.owner = inParent;
-			else props.owner = this;
-		}
-	    if (this[inName] instanceof wm.Component) {
-		c = this[inName];
-	    } else {
-		props = dojo.mixin({}, inProps, {
-		        name: inName,
-			_designer: this._designer,
-			_loading: true
-		}, props);
-	    }
-	    if (!c) {
-        /* Special case where a Composite being designed opens a PageDialog at designtime where the PageDialog 
-         * is itself not being designed but is in fact a wizard
-         */
-        if (inProps._isDesignLoaded === false) delete props._designer;
-
-		if (this.isRelativePositioned && inType == "wm.Layout") {
-			props.isRelativePositioned = true;
-		}
-
-		// All custom methods should be page methods; page methods have not been evaled, so
-		// can not be defined nor invoked at design time
-		if (!this.isDesignLoaded()) {
-			for (var p in props) {
-				if (p.indexOf("custom") == 0 && dojo.isFunction(ctor.prototype[p])) {
-					var owner = props.owner;
-					props[p] = dojo.hitch(owner, owner[props[p]]);
-				}
-			}
-		}
+        /* Load all app-level components from project.js */
+        this.loadComponents(this.constructor.widgets || this.widgets);
 
 
+        if (!this.debugDialog) {
+            if (this._overrideDebugDialog !== undefined) {
+                if (this._overrideDebugDialog) this.createDebugDialog();
+            } else if (djConfig.isDebug && (wm.device != "phone" || wm.isFakeMobile)) {
+                this.createDebugDialog();
+            }
+        }
 
-		// Calls Component.create, which calls prepare, build, init and postInit
-		var c = this._create(ctor, props);
+        if (!wm.isPhonegap) {
+            this.pageDialog = new wm.PageDialog({
+                name: "pageDialog",
+                owner: this
+            });
+        }
 
 
-		// FIXME: this initialization should be in Component
-		// to remove the distinction between 'loading' and 'creating'
-		if (!inParent && isWidget) {
-			c.moveable = false;
-			this.root = c;
-		}
-	    }
-		this.makeEvents(inEvents, c);
-		//if (!(c instanceof wm.Layer) || !c.deferLoading)
-		if (inChildren) this.loadComponents(inChildren, c);
-
-		c.loaded(); // Component.loaded calls postInit
-		var timeToLoad = this.stopTimerWithName("LoadComponent", inType);
-		if (wm.debugPerformance) {
-			if (inType == "wm.Layout") {
-				console.log(inType + ": " + inName + " TOOK " + timeToLoad + " ms");
-				console.groupEnd();
-				this.printPagePerformanceData();
-				console.log(inType + ": " + inName + " TOOK " + timeToLoad + " ms");
-			}
-		}
-
-		return c;
-	}
+        /* WM-2794: ENTER key in a text input causes focus to move to first button and fire it; make sure its a button that does nothing; only certain this is an issue in IE 8 */
+        if (dojo.isIE <= 8) {
+            var button = document.createElement("BUTTON");
+            button.style.width = "1px";
+            button.style.height = "1px";
+            this.domNode.appendChild(button);
+        }
+        var main;
+        if (wm.device == "tablet") {
+            main = this.tabletMain;
+        } else if (wm.device == "phone") {
+            main = this.phoneMain;
+        }
+        if (!main) {
+            main = this.main;
+        }
+        this.pageContainer._initialPageName = main;
+        if (window["PhoneGap"] && this.isSecurityEnabled && this.isLoginPageEnabled && this.phoneGapLoginPage) {
+            this.loadPage(this.phoneGapLoginPage);
+        } else {
+            this.loadPage(main);
+        }
+        this.hideLoadingIndicator();
+    }
 });

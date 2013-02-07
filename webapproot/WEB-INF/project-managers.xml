@@ -7,6 +7,7 @@
                     <list>
                         <value>com.genushealthdb.data.Dispositions</value>
                         <value>com.genushealthdb.data.Feedbackquestions</value>
+                        <value>com.genushealthdb.data.Feedbackquestionset</value>
                         <value>com.genushealthdb.data.Feedbackresponses</value>
                         <value>com.genushealthdb.data.Jsonfiles</value>
                         <value>com.genushealthdb.data.Messages</value>

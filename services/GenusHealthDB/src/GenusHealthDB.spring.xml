@@ -48,6 +48,7 @@
             <list>
                 <value>com/genushealthdb/data/Dispositions.hbm.xml</value>
                 <value>com/genushealthdb/data/Feedbackquestions.hbm.xml</value>
+                <value>com/genushealthdb/data/Feedbackquestionset.hbm.xml</value>
                 <value>com/genushealthdb/data/Feedbackresponses.hbm.xml</value>
                 <value>com/genushealthdb/data/Jsonfiles.hbm.xml</value>
                 <value>com/genushealthdb/data/Messages.hbm.xml</value>

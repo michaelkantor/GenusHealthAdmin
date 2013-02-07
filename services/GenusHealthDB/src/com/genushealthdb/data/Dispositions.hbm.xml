@@ -20,11 +20,8 @@
         <property name="displayName" type="string">
             <column name="display_name" length="31"/>
         </property>
-        <set name="feedbackquestionss" inverse="true" cascade="">
-            <key>
-                <column name="dispositionid" not-null="true"/>
-            </key>
-            <one-to-many class="com.genushealthdb.data.Feedbackquestions"/>
-        </set>
+        <many-to-one name="feedbackquestionset" class="com.genushealthdb.data.Feedbackquestionset" cascade="none">
+            <column name="feedback_question_set_id"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

@@ -11,14 +11,14 @@
         <property name="ordernumber" type="integer">
             <column name="ordernumber" not-null="true"/>
         </property>
-        <many-to-one name="dispositions" class="com.genushealthdb.data.Dispositions" cascade="none">
-            <column name="dispositionid" not-null="true"/>
-        </many-to-one>
         <set name="feedbackresponsess" inverse="true" cascade="">
             <key>
                 <column name="feedbackquestionid" not-null="true"/>
             </key>
             <one-to-many class="com.genushealthdb.data.Feedbackresponses"/>
         </set>
+        <many-to-one name="feedbackquestionset" class="com.genushealthdb.data.Feedbackquestionset" cascade="none">
+            <column name="feedbackquestionsetid" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

@@ -2,13 +2,11 @@
 package com.genushealthdb.data;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
  *  GenusHealthDB.Dispositions
- *  12/16/2012 16:48:47
+ *  02/04/2013 08:54:09
  * 
  */
 public class Dispositions {
@@ -19,7 +17,7 @@ public class Dispositions {
     private Date createdAt;
     private Date modifiedAt;
     private String displayName;
-    private Set<com.genushealthdb.data.Feedbackquestions> feedbackquestionss = new HashSet<com.genushealthdb.data.Feedbackquestions>();
+    private Feedbackquestionset feedbackquestionset;
 
     public Integer getDispositionId() {
         return dispositionId;
@@ -69,12 +67,12 @@ public class Dispositions {
         this.displayName = displayName;
     }
 
-    public Set<com.genushealthdb.data.Feedbackquestions> getFeedbackquestionss() {
-        return feedbackquestionss;
+    public Feedbackquestionset getFeedbackquestionset() {
+        return feedbackquestionset;
     }
 
-    public void setFeedbackquestionss(Set<com.genushealthdb.data.Feedbackquestions> feedbackquestionss) {
-        this.feedbackquestionss = feedbackquestionss;
+    public void setFeedbackquestionset(Feedbackquestionset feedbackquestionset) {
+        this.feedbackquestionset = feedbackquestionset;
     }
 
 }

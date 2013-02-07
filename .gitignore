@@ -2,5 +2,5 @@
 export/
 phonegap/
 webapproot/timestamp.txt
-WEB-INF/classes
-WEB-INF/lib
+webapproot/WEB-INF/classes
+webapproot/WEB-INF/lib

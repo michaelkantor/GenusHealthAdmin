@@ -4,7 +4,7 @@ package com.genushealthdb.data.output;
 
 
 /**
- * Generated for query "synopsisQuery" on 12/16/2012 16:49:10
+ * Generated for query "synopsisQuery" on 02/04/2013 08:54:12
  * 
  */
 public class SynopsisQueryRtnType {

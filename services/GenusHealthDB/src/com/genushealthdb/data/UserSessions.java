@@ -6,7 +6,7 @@ import java.util.Date;
 
 /**
  *  GenusHealthDB.UserSessions
- *  12/16/2012 16:48:47
+ *  02/04/2013 08:54:09
  * 
  */
 public class UserSessions {
