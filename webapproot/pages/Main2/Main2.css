@@ -12,3 +12,10 @@ li > .Anchor {
     text-decoration: underline;
     cursor: pointer;
 }
+
+.QuestionEntry {
+    font-weight: bold;
+}
+.AnswerEntry {
+    margin-left: 20px;   
+}
