@@ -14,11 +14,12 @@
                         <value>com.genushealthdb.data.Node</value>
                         <value>com.genushealthdb.data.NodeGroup</value>
                         <value>com.genushealthdb.data.UserSessions</value>
-                        <value>com.genushealthdb.data.output.GroupByDiagnosisRtnType</value>
                         <value>com.genushealthdb.data.output.GetMaxNodeIdRtnType</value>
+                        <value>com.genushealthdb.data.output.SynopsisQueryRtnType</value>
+                        <value>com.genushealthdb.data.output.GetSessionVersionsRtnType</value>
+                        <value>com.genushealthdb.data.output.GroupByDiagnosisRtnType</value>
                         <value>com.genushealthdb.data.output.GroupByConditionTypeQueryRtnType</value>
                         <value>com.genushealthdb.data.output.GetJsonFilesByConditionTypeRtnType</value>
-                        <value>com.genushealthdb.data.output.SynopsisQueryRtnType</value>
                         <value>com.genushealthdb.data.output.GroupByNodeIdRtnType</value>
                     </list>
                 </entry>

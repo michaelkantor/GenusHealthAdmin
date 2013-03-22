@@ -8,17 +8,18 @@ import java.util.Set;
 
 /**
  *  GenusHealthDB.Node
- *  02/04/2013 08:54:09
+ *  03/22/2013 07:16:08
  * 
  */
 public class Node {
 
     private Integer nodeId;
-    private Integer parentId;
     private String answer;
     private String question;
     private Date createdAt;
     private Date updatedAt;
+    private Integer parent_id;
+    private Set<com.genushealthdb.data.NodeGroup> nodegroups = new HashSet<com.genushealthdb.data.NodeGroup>();
     private Set<com.genushealthdb.data.UserSessions> usersessionss = new HashSet<com.genushealthdb.data.UserSessions>();
 
     public Integer getNodeId() {
@@ -27,14 +28,6 @@ public class Node {
 
     public void setNodeId(Integer nodeId) {
         this.nodeId = nodeId;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
     }
 
     public String getAnswer() {
@@ -67,6 +60,22 @@ public class Node {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(Integer parent_id) {
+        this.parent_id = parent_id;
+    }
+
+    public Set<com.genushealthdb.data.NodeGroup> getNodegroups() {
+        return nodegroups;
+    }
+
+    public void setNodegroups(Set<com.genushealthdb.data.NodeGroup> nodegroups) {
+        this.nodegroups = nodegroups;
     }
 
     public Set<com.genushealthdb.data.UserSessions> getUsersessionss() {

@@ -23,8 +23,17 @@
         <property name="feedback" type="string">
             <column name="feedback"/>
         </property>
+        <property name="version" type="string">
+            <column name="version"/>
+        </property>
         <many-to-one name="node" class="com.genushealthdb.data.Node" cascade="none">
             <column name="final_node_id"/>
         </many-to-one>
+        <set name="messagess" inverse="true" cascade="">
+            <key>
+                <column name="session_id" not-null="true"/>
+            </key>
+            <one-to-many class="com.genushealthdb.data.Messages"/>
+        </set>
     </class>
 </hibernate-mapping>

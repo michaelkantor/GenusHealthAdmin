@@ -4,7 +4,7 @@ package com.genushealthdb.data.output;
 
 
 /**
- * Generated for query "getMaxNodeId" on 02/04/2013 08:54:12
+ * Generated for query "getMaxNodeId" on 03/22/2013 07:16:11
  * 
  */
 public class GetMaxNodeIdRtnType {

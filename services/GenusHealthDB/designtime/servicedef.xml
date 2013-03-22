@@ -4,6 +4,7 @@
         <return typeRef="com.genushealthdb.data.output.GroupByConditionTypeQueryRtnType" isList="true"/>
     </operation>
     <operation operationType="hqlquery" name="synopsisQuery">
+        <parameter name="version" typeRef="java.lang.String" isList="false"/>
         <return typeRef="com.genushealthdb.data.output.SynopsisQueryRtnType" isList="true"/>
     </operation>
     <operation operationType="hqlquery" name="getJsonFilesByConditionType">
@@ -13,14 +14,23 @@
     <operation operationType="hqlquery" name="groupByNodeId">
         <parameter name="conditionType" typeRef="java.lang.String" isList="false"/>
         <parameter name="modelDiagnosis" typeRef="java.lang.String" isList="false"/>
+        <parameter name="version" typeRef="java.lang.String" isList="false"/>
         <return typeRef="com.genushealthdb.data.output.GroupByNodeIdRtnType" isList="true"/>
+    </operation>
+    <operation operationType="hqlquery" name="getNodeById">
+        <parameter name="nodeId" typeRef="java.lang.Integer" isList="false"/>
+        <return typeRef="com.genushealthdb.data.Node" isList="true"/>
     </operation>
     <operation operationType="hqlquery" name="groupByDiagnosis">
         <parameter name="conditionType" typeRef="java.lang.String" isList="false"/>
+        <parameter name="version" typeRef="java.lang.String" isList="false"/>
         <return typeRef="com.genushealthdb.data.output.GroupByDiagnosisRtnType" isList="true"/>
     </operation>
     <operation operationType="hqlquery" name="getMaxNodeId">
         <return typeRef="com.genushealthdb.data.output.GetMaxNodeIdRtnType" isList="true"/>
+    </operation>
+    <operation operationType="hqlquery" name="getSessionVersions">
+        <return typeRef="com.genushealthdb.data.output.GetSessionVersionsRtnType" isList="true"/>
     </operation>
     <operation operationType="hqlquery" name="getConditionList">
         <return typeRef="com.genushealthdb.data.NodeGroup" isList="true"/>
@@ -113,7 +123,7 @@
             <element name="sender" typeRef="java.lang.String" isList="false" allowNull="false"/>
             <element name="text" typeRef="java.lang.String" isList="false" allowNull="true"/>
             <element name="createdAt" typeRef="java.util.Date" isList="false" allowNull="false"/>
-            <element name="sessionId" typeRef="java.lang.Integer" isList="false" allowNull="false"/>
+            <element name="userSessions" typeRef="com.genushealthdb.data.UserSessions" isList="false" allowNull="false"/>
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.Node" supportsQuickData="true">
             <element name="nodeId" typeRef="java.lang.Integer" isList="false" allowNull="false">
@@ -125,11 +135,12 @@
                 <noChange>read</noChange>
                 <noChange>update</noChange>
             </element>
-            <element name="parentId" typeRef="java.lang.Integer" isList="false" allowNull="true"/>
             <element name="answer" typeRef="java.lang.String" isList="false" allowNull="true"/>
             <element name="question" typeRef="java.lang.String" isList="false" allowNull="true"/>
             <element name="createdAt" typeRef="java.util.Date" isList="false" allowNull="false"/>
             <element name="updatedAt" typeRef="java.util.Date" isList="false" allowNull="false"/>
+            <element name="parent_id" typeRef="java.lang.Integer" isList="true" allowNull="true"/>
+            <element name="nodegroups" typeRef="com.genushealthdb.data.NodeGroup" isList="true" allowNull="true"/>
             <element name="usersessionss" typeRef="com.genushealthdb.data.UserSessions" isList="true" allowNull="true"/>
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.NodeGroup" supportsQuickData="true">
@@ -143,8 +154,8 @@
                 <exclude>insert</exclude>
             </element>
             <element name="name" typeRef="java.lang.String" isList="false" allowNull="false"/>
-            <element name="rootNodeId" typeRef="java.lang.Integer" isList="false" allowNull="false"/>
             <element name="status" typeRef="java.lang.Byte" isList="false" allowNull="false"/>
+            <element name="node" typeRef="com.genushealthdb.data.Node" isList="false" allowNull="false"/>
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.UserSessions" supportsQuickData="true">
             <element name="sessionId" typeRef="java.lang.Integer" isList="false" allowNull="false">
@@ -162,14 +173,23 @@
             <element name="createdAt" typeRef="java.util.Date" isList="false" allowNull="true"/>
             <element name="updatedAt" typeRef="java.util.Date" isList="false" allowNull="false"/>
             <element name="feedback" typeRef="java.lang.String" isList="false" allowNull="true"/>
+            <element name="version" typeRef="java.lang.String" isList="false" allowNull="true"/>
             <element name="node" typeRef="com.genushealthdb.data.Node" isList="false" allowNull="true"/>
+            <element name="messagess" typeRef="com.genushealthdb.data.Messages" isList="true" allowNull="true"/>
+        </dataobject>
+        <dataobject javaType="com.genushealthdb.data.output.GetMaxNodeIdRtnType" supportsQuickData="false">
+            <element name="newId" typeRef="java.lang.Integer" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.genushealthdb.data.output.SynopsisQueryRtnType" supportsQuickData="false">
+            <element name="conditionType" typeRef="java.lang.String" isList="false" allowNull="false"/>
+            <element name="count" typeRef="java.lang.Long" isList="false" allowNull="false"/>
+        </dataobject>
+        <dataobject javaType="com.genushealthdb.data.output.GetSessionVersionsRtnType" supportsQuickData="false">
+            <element name="version" typeRef="java.lang.String" isList="false" allowNull="false"/>
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.output.GroupByDiagnosisRtnType" supportsQuickData="false">
             <element name="modelDiagnosis" typeRef="java.lang.String" isList="false" allowNull="false"/>
             <element name="count" typeRef="java.lang.Long" isList="false" allowNull="false"/>
-        </dataobject>
-        <dataobject javaType="com.genushealthdb.data.output.GetMaxNodeIdRtnType" supportsQuickData="false">
-            <element name="newId" typeRef="java.lang.Integer" isList="false" allowNull="false"/>
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.output.GroupByConditionTypeQueryRtnType" supportsQuickData="false">
             <element name="conditionType" typeRef="java.lang.String" isList="false" allowNull="false"/>
@@ -177,10 +197,6 @@
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.output.GetJsonFilesByConditionTypeRtnType" supportsQuickData="false">
             <element name="text" typeRef="java.lang.String" isList="false" allowNull="false"/>
-        </dataobject>
-        <dataobject javaType="com.genushealthdb.data.output.SynopsisQueryRtnType" supportsQuickData="false">
-            <element name="conditionType" typeRef="java.lang.String" isList="false" allowNull="false"/>
-            <element name="count" typeRef="java.lang.Long" isList="false" allowNull="false"/>
         </dataobject>
         <dataobject javaType="com.genushealthdb.data.output.GroupByNodeIdRtnType" supportsQuickData="false">
             <element name="nodeId" typeRef="java.lang.Integer" isList="false" allowNull="false"/>

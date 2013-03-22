@@ -18,6 +18,19 @@
 		"parameters": null,
 		"returnType": "[com.genushealthdb.data.output.GetMaxNodeIdRtnType]"
 	}, {
+		"name": "getNodeById",
+		"operationType": "hqlquery",
+		"parameters": [{
+			"name": "nodeId",
+			"type": "java.lang.Integer"
+		}],
+		"returnType": "[com.genushealthdb.data.Node]"
+	}, {
+		"name": "getSessionVersions",
+		"operationType": "hqlquery",
+		"parameters": null,
+		"returnType": "[com.genushealthdb.data.output.GetSessionVersionsRtnType]"
+	}, {
 		"name": "groupByConditionTypeQuery",
 		"operationType": "hqlquery",
 		"parameters": null,
@@ -27,6 +40,9 @@
 		"operationType": "hqlquery",
 		"parameters": [{
 			"name": "conditionType",
+			"type": "java.lang.String"
+		}, {
+			"name": "version",
 			"type": "java.lang.String"
 		}],
 		"returnType": "[com.genushealthdb.data.output.GroupByDiagnosisRtnType]"
@@ -39,12 +55,18 @@
 		}, {
 			"name": "modelDiagnosis",
 			"type": "java.lang.String"
+		}, {
+			"name": "version",
+			"type": "java.lang.String"
 		}],
 		"returnType": "[com.genushealthdb.data.output.GroupByNodeIdRtnType]"
 	}, {
 		"name": "synopsisQuery",
 		"operationType": "hqlquery",
-		"parameters": null,
+		"parameters": [{
+			"name": "version",
+			"type": "java.lang.String"
+		}],
 		"returnType": "[com.genushealthdb.data.output.SynopsisQueryRtnType]"
 	}],
 	"serviceType": "JSON-RPC",

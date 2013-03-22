@@ -319,16 +319,6 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.String"
 				},
-				"sessionId": {
-					"exclude": [],
-					"fieldOrder": 4,
-					"fieldSubType": null,
-					"include": [],
-					"isList": false,
-					"noChange": [],
-					"required": true,
-					"type": "java.lang.Integer"
-				},
 				"text": {
 					"exclude": [],
 					"fieldOrder": 2,
@@ -338,6 +328,16 @@ wm.types = {
 					"noChange": [],
 					"required": false,
 					"type": "java.lang.String"
+				},
+				"userSessions": {
+					"exclude": [],
+					"fieldOrder": 4,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "com.genushealthdb.data.UserSessions"
 				}
 			},
 			"internal": false,
@@ -348,7 +348,7 @@ wm.types = {
 			"fields": {
 				"answer": {
 					"exclude": [],
-					"fieldOrder": 2,
+					"fieldOrder": 1,
 					"fieldSubType": null,
 					"include": [],
 					"isList": false,
@@ -358,7 +358,7 @@ wm.types = {
 				},
 				"createdAt": {
 					"exclude": [],
-					"fieldOrder": 4,
+					"fieldOrder": 3,
 					"fieldSubType": null,
 					"include": [],
 					"isList": false,
@@ -376,19 +376,29 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.Integer"
 				},
-				"parentId": {
+				"nodegroups": {
 					"exclude": [],
-					"fieldOrder": 1,
+					"fieldOrder": 6,
 					"fieldSubType": null,
 					"include": [],
-					"isList": false,
+					"isList": true,
+					"noChange": [],
+					"required": false,
+					"type": "com.genushealthdb.data.NodeGroup"
+				},
+				"parent_id": {
+					"exclude": [],
+					"fieldOrder": 5,
+					"fieldSubType": null,
+					"include": [],
+					"isList": true,
 					"noChange": [],
 					"required": false,
 					"type": "java.lang.Integer"
 				},
 				"question": {
 					"exclude": [],
-					"fieldOrder": 3,
+					"fieldOrder": 2,
 					"fieldSubType": null,
 					"include": [],
 					"isList": false,
@@ -398,7 +408,7 @@ wm.types = {
 				},
 				"updatedAt": {
 					"exclude": [],
-					"fieldOrder": 5,
+					"fieldOrder": 4,
 					"fieldSubType": null,
 					"include": [],
 					"isList": false,
@@ -408,7 +418,7 @@ wm.types = {
 				},
 				"usersessionss": {
 					"exclude": [],
-					"fieldOrder": 6,
+					"fieldOrder": 7,
 					"fieldSubType": null,
 					"include": [],
 					"isList": true,
@@ -433,6 +443,16 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.String"
 				},
+				"node": {
+					"exclude": [],
+					"fieldOrder": 3,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "com.genushealthdb.data.Node"
+				},
 				"nodegroupId": {
 					"exclude": ["insert"],
 					"fieldOrder": 0,
@@ -443,19 +463,9 @@ wm.types = {
 					"required": true,
 					"type": "java.lang.Integer"
 				},
-				"rootNodeId": {
-					"exclude": [],
-					"fieldOrder": 2,
-					"fieldSubType": null,
-					"include": [],
-					"isList": false,
-					"noChange": [],
-					"required": true,
-					"type": "java.lang.Integer"
-				},
 				"status": {
 					"exclude": [],
-					"fieldOrder": 3,
+					"fieldOrder": 2,
 					"fieldSubType": null,
 					"include": [],
 					"isList": false,
@@ -500,6 +510,16 @@ wm.types = {
 					"required": false,
 					"type": "java.lang.String"
 				},
+				"messagess": {
+					"exclude": [],
+					"fieldOrder": 9,
+					"fieldSubType": null,
+					"include": [],
+					"isList": true,
+					"noChange": [],
+					"required": false,
+					"type": "com.genushealthdb.data.Messages"
+				},
 				"modelDiagnosis": {
 					"exclude": [],
 					"fieldOrder": 2,
@@ -512,7 +532,7 @@ wm.types = {
 				},
 				"node": {
 					"exclude": [],
-					"fieldOrder": 7,
+					"fieldOrder": 8,
 					"fieldSubType": null,
 					"include": [],
 					"isList": false,
@@ -549,6 +569,16 @@ wm.types = {
 					"noChange": [],
 					"required": true,
 					"type": "java.util.Date"
+				},
+				"version": {
+					"exclude": [],
+					"fieldOrder": 7,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": false,
+					"type": "java.lang.String"
 				}
 			},
 			"internal": false,
@@ -583,6 +613,23 @@ wm.types = {
 					"noChange": [],
 					"required": true,
 					"type": "java.lang.Integer"
+				}
+			},
+			"internal": false,
+			"liveService": false,
+			"service": "GenusHealthDB"
+		},
+		"com.genushealthdb.data.output.GetSessionVersionsRtnType": {
+			"fields": {
+				"version": {
+					"exclude": [],
+					"fieldOrder": 0,
+					"fieldSubType": null,
+					"include": [],
+					"isList": false,
+					"noChange": [],
+					"required": true,
+					"type": "java.lang.String"
 				}
 			},
 			"internal": false,

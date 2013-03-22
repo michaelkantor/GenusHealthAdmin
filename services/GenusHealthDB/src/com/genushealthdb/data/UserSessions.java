@@ -2,11 +2,13 @@
 package com.genushealthdb.data;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
  *  GenusHealthDB.UserSessions
- *  02/04/2013 08:54:09
+ *  03/22/2013 07:16:08
  * 
  */
 public class UserSessions {
@@ -18,7 +20,9 @@ public class UserSessions {
     private Date createdAt;
     private Date updatedAt;
     private String feedback;
+    private String version;
     private Node node;
+    private Set<com.genushealthdb.data.Messages> messagess = new HashSet<com.genushealthdb.data.Messages>();
 
     public Integer getSessionId() {
         return sessionId;
@@ -76,12 +80,28 @@ public class UserSessions {
         this.feedback = feedback;
     }
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     public Node getNode() {
         return node;
     }
 
     public void setNode(Node node) {
         this.node = node;
+    }
+
+    public Set<com.genushealthdb.data.Messages> getMessagess() {
+        return messagess;
+    }
+
+    public void setMessagess(Set<com.genushealthdb.data.Messages> messagess) {
+        this.messagess = messagess;
     }
 
 }

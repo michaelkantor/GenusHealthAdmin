@@ -10,9 +10,9 @@ dojo.declare("GenusHealthAdmin", wm.Application, {
 	"name": "", 
 	"phoneGapLoginPage": "Login", 
 	"phoneMain": "", 
-	"projectSubVersion": "Alpha40", 
+	"projectSubVersion": "Alpha41", 
 	"projectVersion": 1, 
-	"studioVersion": "6.5.2.Release", 
+	"studioVersion": "6.5.3.Release", 
 	"tabletMain": "", 
 	"theme": "wm_default", 
 	"toastPosition": "br", 
@@ -20,10 +20,16 @@ dojo.declare("GenusHealthAdmin", wm.Application, {
 	"touchToRightClickDelay": 1500,
 	"widgets": {
 		silkIconList: ["wm.ImageList", {"colCount":39,"height":16,"iconCount":90,"url":"lib/images/silkIcons/silk.png","width":16}, {}], 
-		loginPageDialog: ["wm.PageDialog", {"hideControls":true,"title":"Login"}, {}]
+		loginPageDialog: ["wm.PageDialog", {"hideControls":true,"pageName":"Login","title":"Login"}, {}]
 	},
 	_end: 0
 });
+
+/* On Reimport of DB:
+ * NodeGroup needs a relationship named "node"
+ * Messages table needs a relationship named "userSessions"
+ * Node does NOT get a relationship named "node"; but DOES need a field named "parent_id" not "parentId".
+ */
 
 GenusHealthAdmin.extend({
 	onSessionExpiration: function() {

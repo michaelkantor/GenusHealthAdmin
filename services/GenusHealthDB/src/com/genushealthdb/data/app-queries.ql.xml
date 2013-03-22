@@ -2,12 +2,17 @@
 <hibernate-mapping>
     <meta attribute="@design.default-queries"/>
     <query name="synopsisQuery">
-        SELECT conditionType as conditionType, count(*) as count FROM UserSessions GROUP BY  conditionType
+        <query-param name="version" type="java.lang.String"/>
+        SELECT conditionType as conditionType, count(*) as count FROM UserSessions
+WHERE (:version is NULL OR version = :version)
+GROUP BY  conditionType
     </query>
     <query name="groupByDiagnosis">
         <query-param name="conditionType" type="java.lang.String"/>
+        <query-param name="version" type="java.lang.String"/>
         SELECT modelDiagnosis as modelDiagnosis, count(*) as count FROM UserSessions
 WHERE conditionType = :conditionType
+AND     (:version is NULL OR :version = version)
 GROUP BY  modelDiagnosis
     </query>
     <query name="groupByConditionTypeQuery">
@@ -26,9 +31,18 @@ GROUP BY  modelDiagnosis
     <query name="groupByNodeId">
         <query-param name="conditionType" type="java.lang.String"/>
         <query-param name="modelDiagnosis" type="java.lang.String"/>
+        <query-param name="version" type="java.lang.String"/>
         SELECT node.nodeId as nodeId, count(*) as count FROM UserSessions
-WHERE conditionType = :conditionType AND
-modelDiagnosis = :modelDiagnosis
+WHERE conditionType = :conditionType
+AND modelDiagnosis = :modelDiagnosis
+AND (:version is NULL OR :version = version)
 GROUP BY  node.nodeId
+    </query>
+    <query name="getNodeById">
+        <query-param name="nodeId" type="java.lang.Integer"/>
+        FROM Node where nodeId=:nodeId
+    </query>
+    <query name="getSessionVersions">
+        SELECT version as version from UserSessions group by version
     </query>
 </hibernate-mapping>

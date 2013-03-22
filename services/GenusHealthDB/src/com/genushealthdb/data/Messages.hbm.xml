@@ -14,8 +14,8 @@
         <property name="createdAt" type="timestamp">
             <column name="created_at" length="19" not-null="true"/>
         </property>
-        <property name="sessionId" type="integer">
+        <many-to-one name="userSessions" class="com.genushealthdb.data.UserSessions" cascade="none">
             <column name="session_id" not-null="true"/>
-        </property>
+        </many-to-one>
     </class>
 </hibernate-mapping>

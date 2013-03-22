@@ -8,11 +8,11 @@
         <property name="name" type="string">
             <column name="name" length="127" not-null="true"/>
         </property>
-        <property name="rootNodeId" type="integer">
-            <column name="root_node_id" not-null="true"/>
-        </property>
         <property name="status" type="byte">
             <column name="status" not-null="true"/>
         </property>
+        <many-to-one name="node" class="com.genushealthdb.data.Node" cascade="none">
+            <column name="root_node_id" not-null="true"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>
