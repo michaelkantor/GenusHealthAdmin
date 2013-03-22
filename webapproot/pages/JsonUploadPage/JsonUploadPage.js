@@ -9,6 +9,7 @@ dojo.declare("JsonUploadPage", wm.Page, {
     jsonInputChange: function(inSender, inDisplayValue, inDataValue, inSetByCode) {
         try {
             var data = dojo.fromJson(inDisplayValue);
+            this.sanitizeJson(data);
             this.dispositionsArray = [];
             var html = "<ul>" + this.getHtmlFromData(data) + "</ul>";
             this.jsonHtml.setHtml(html);
@@ -54,8 +55,10 @@ dojo.declare("JsonUploadPage", wm.Page, {
  getNextNodeIdSuccess: function(inSender, inDeprecated) {
             var data = dojo.fromJson(this.jsonInput.getDataValue());
             this.addIds(data, this.getNextNodeId.getValue("newId") || 1);
+            this.sanitizeJson(data);
             this._data = data;
             this.insertNode(data, null);
+            
             this.insertNodeGroupLVar.sourceData.setValue("node.nodeId", data.nodeId);
             this.insertNodeGroupLVar.update();
             
@@ -70,6 +73,43 @@ dojo.declare("JsonUploadPage", wm.Page, {
                 this.addDispositionsLiveVariable.update();
             }
     },
+    
+    /* Handle common errors when editing the json file */
+    sanitizeJson: function(inData) {
+        for (var name in inData) {
+            switch(name.toLowerCase()) {
+                case "question":
+                    if (name != "question") {
+                        inData.question = inData[name];
+                        delete inData.name;
+                    }
+                    break;
+                case "answer":
+                    if (name != "answer") {
+                        inData.answer = inData[name];
+                        delete inData.name;
+                    }
+                    break;
+                case "responses":
+                    if (name != "responses") {
+                        inData.responses = inData[name];
+                        delete inData.name;
+                    }
+                    if (inData.responses) {
+                        dojo.forEach(inData.responses, function(r) {
+                            this.sanitizeJson(r);
+                        }, this);
+                    }
+                    break;
+                case "actioncode":
+                    if (name != "actionCode") {
+                        inData.actionCode = inData[name];
+                        delete inData.name;
+                    }
+                    break;
+            }
+        }
+    },
     addIds: function(inData, inId) {
         inData.nodeId = inId;
         inId++;
@@ -83,8 +123,8 @@ dojo.declare("JsonUploadPage", wm.Page, {
     },
     insertNode: function(inData, parentId) {
         this.insertNodeLVar.sourceData.setData({
-            nodeId: inData.nodeId,
-            node: {nodeId: parentId},
+            nodeId: inData.nodeId, // addIds removes any ids user puts into the JSON.
+            parent_id: parentId,
             question: inData.question,
             answer: inData.answer,
             createdAt: new Date().getTime(),

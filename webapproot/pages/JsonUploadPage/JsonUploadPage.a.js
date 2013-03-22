@@ -8,6 +8,7 @@ this.importJsonButton.setDisabled(!this.conditionName.getDataValue() || !this.js
 jsonInputChange: function(inSender, inDisplayValue, inDataValue, inSetByCode) {
 try {
 var data = dojo.fromJson(inDisplayValue);
+this.sanitizeJson(data);
 this.dispositionsArray = [];
 var html = "<ul>" + this.getHtmlFromData(data) + "</ul>";
 this.jsonHtml.setHtml(html);
@@ -51,6 +52,7 @@ return html;
 getNextNodeIdSuccess: function(inSender, inDeprecated) {
 var data = dojo.fromJson(this.jsonInput.getDataValue());
 this.addIds(data, this.getNextNodeId.getValue("newId") || 1);
+this.sanitizeJson(data);
 this._data = data;
 this.insertNode(data, null);
 this.insertNodeGroupLVar.sourceData.setValue("node.nodeId", data.nodeId);
@@ -66,6 +68,42 @@ modifiedAt: new Date().getTime()
 this.addDispositionsLiveVariable.update();
 }
 },
+/* Handle common errors when editing the json file */
+sanitizeJson: function(inData) {
+for (var name in inData) {
+switch(name.toLowerCase()) {
+case "question":
+if (name != "question") {
+inData.question = inData[name];
+delete inData.name;
+}
+break;
+case "answer":
+if (name != "answer") {
+inData.answer = inData[name];
+delete inData.name;
+}
+break;
+case "responses":
+if (name != "responses") {
+inData.responses = inData[name];
+delete inData.name;
+}
+if (inData.responses) {
+dojo.forEach(inData.responses, function(r) {
+this.sanitizeJson(r);
+}, this);
+}
+break;
+case "actioncode":
+if (name != "actionCode") {
+inData.actionCode = inData[name];
+delete inData.name;
+}
+break;
+}
+}
+},
 addIds: function(inData, inId) {
 inData.nodeId = inId;
 inId++;
@@ -79,8 +117,8 @@ return inId;
 },
 insertNode: function(inData, parentId) {
 this.insertNodeLVar.sourceData.setData({
-nodeId: inData.nodeId,
-node: {nodeId: parentId},
+nodeId: inData.nodeId, // addIds removes any ids user puts into the JSON.
+parent_id: parentId,
 question: inData.question,
 answer: inData.answer,
 createdAt: new Date().getTime(),
@@ -118,15 +156,16 @@ JsonUploadPage.widgets = {
 insertJsonLVar: ["wm.LiveVariable", {"autoUpdate":false,"inFlightBehavior":"executeLast","operation":"insert","startUpdate":false,"type":"com.genushealthdb.data.Jsonfiles"}, {}, {
 liveView: ["wm.LiveView", {"dataType":"com.genushealthdb.data.Jsonfiles","view":[{"caption":"FileId","sortable":true,"dataIndex":"fileId","type":"java.lang.Integer","displayType":"Number","required":true,"readonly":true,"includeLists":true,"includeForms":true,"order":0,"subType":null},{"caption":"Text","sortable":true,"dataIndex":"text","type":"byte","displayType":"Number","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"Name","sortable":true,"dataIndex":"name","type":"java.lang.String","displayType":"Text","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":2,"subType":null},{"caption":"CreatedAt","sortable":true,"dataIndex":"createdAt","type":"java.util.Date","displayType":"Date","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":3,"subType":null},{"caption":"ModifiedAt","sortable":true,"dataIndex":"modifiedAt","type":"java.util.Date","displayType":"Date","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":4,"subType":null}]}, {}]
 }],
-insertNodeGroupLVar: ["wm.LiveVariable", {"autoUpdate":false,"inFlightBehavior":"executeLast","operation":"insert","startUpdate":false,"type":"com.genushealthdb.data.Nodegroup"}, {}, {
+insertNodeGroupLVar: ["wm.LiveVariable", {"autoUpdate":false,"inFlightBehavior":"executeLast","operation":"insert","startUpdate":false,"type":"com.genushealthdb.data.NodeGroup"}, {}, {
 binding: ["wm.Binding", {}, {}, {
 wire: ["wm.Wire", {"expression":undefined,"source":"conditionName.dataValue","targetProperty":"sourceData.name"}, {}],
-wire1: ["wm.Wire", {"expression":"0","targetProperty":"sourceData.nodegroupId"}, {}]
+wire1: ["wm.Wire", {"expression":"0","targetProperty":"sourceData.nodegroupId"}, {}],
+wire2: ["wm.Wire", {"expression":"0","targetProperty":"sourceData.status"}, {}]
 }],
-liveView: ["wm.LiveView", {"dataType":"com.genushealthdb.data.Nodegroup","view":[{"caption":"NodegroupId","sortable":true,"dataIndex":"nodegroupId","type":"java.lang.Integer","displayType":"Number","required":true,"readonly":true,"includeLists":true,"includeForms":true,"order":0,"subType":null},{"caption":"Name","sortable":true,"dataIndex":"name","type":"java.lang.String","displayType":"Text","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"Status","sortable":true,"dataIndex":"status","type":"java.lang.Byte","displayType":"Number","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":2,"subType":null}]}, {}]
+liveView: ["wm.LiveView", {"dataType":"com.genushealthdb.data.NodeGroup","view":[{"caption":"NodegroupId","sortable":true,"dataIndex":"nodegroupId","type":"java.lang.Integer","displayType":"Number","required":true,"readonly":true,"includeLists":true,"includeForms":true,"order":0,"subType":null},{"caption":"Name","sortable":true,"dataIndex":"name","type":"java.lang.String","displayType":"Text","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"Status","sortable":true,"dataIndex":"status","type":"java.lang.Byte","displayType":"Number","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":3,"subType":null}]}, {}]
 }],
 insertNodeLVar: ["wm.LiveVariable", {"autoUpdate":false,"inFlightBehavior":"executeAll","loadingDialog":"","operation":"insert","startUpdate":false,"type":"com.genushealthdb.data.Node"}, {"onResult":"insertNodeLVarResult"}, {
-liveView: ["wm.LiveView", {"dataType":"com.genushealthdb.data.Node","view":[{"caption":"NodeId","sortable":true,"dataIndex":"nodeId","type":"java.lang.Integer","displayType":"Number","required":true,"readonly":true,"includeLists":true,"includeForms":true,"order":0,"subType":null},{"caption":"Question","sortable":true,"dataIndex":"question","type":"java.lang.String","displayType":"Text","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"Answer","sortable":true,"dataIndex":"answer","type":"java.lang.String","displayType":"Text","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"CreatedAt","sortable":true,"dataIndex":"createdAt","type":"java.util.Date","displayType":"Date","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":2,"subType":null},{"caption":"UpdatedAt","sortable":true,"dataIndex":"updatedAt","type":"java.util.Date","displayType":"Date","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":3,"subType":null}]}, {}]
+liveView: ["wm.LiveView", {"dataType":"com.genushealthdb.data.Node","view":[{"caption":"NodeId","sortable":true,"dataIndex":"nodeId","type":"java.lang.Integer","displayType":"Number","required":true,"readonly":true,"includeLists":true,"includeForms":true,"order":0,"subType":null},{"caption":"Question","sortable":true,"dataIndex":"question","type":"java.lang.String","displayType":"Text","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"Answer","sortable":true,"dataIndex":"answer","type":"java.lang.String","displayType":"Text","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":1,"subType":null},{"caption":"CreatedAt","sortable":true,"dataIndex":"createdAt","type":"java.util.Date","displayType":"Date","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":2,"subType":null},{"caption":"UpdatedAt","sortable":true,"dataIndex":"updatedAt","type":"java.util.Date","displayType":"Date","required":true,"readonly":false,"includeLists":true,"includeForms":true,"order":3,"subType":null},{"caption":"Parent_id","sortable":true,"dataIndex":"parent_id","type":"java.lang.Integer","displayType":"Number","required":false,"readonly":false,"includeLists":true,"includeForms":true,"order":5,"subType":null}]}, {}]
 }],
 conditionListSVar: ["wm.ServiceVariable", {"inFlightBehavior":"executeLast","operation":"getConditionList","service":"GenusHealthDB","startUpdate":true}, {}, {
 input: ["wm.ServiceInput", {"type":"getConditionListInputs"}, {}]
@@ -145,10 +184,11 @@ wire: ["wm.Wire", {"expression":undefined,"source":"layoutBox1","targetProperty"
 layoutBox1: ["wm.Layout", {"horizontalAlign":"left","verticalAlign":"top"}, {}, {
 jsonLayer: ["wm.Panel", {"border":"1","borderColor":"#999999","height":"100%","horizontalAlign":"left","layoutKind":"left-to-right","themeStyleType":"ContentPanel","verticalAlign":"top","width":"100%"}, {}, {
 jsonInput: ["wm.LargeTextArea", {"caption":"Paste Json in here","changeOnKey":true,"dataValue":undefined,"displayValue":"","height":"100%"}, {"onchange":"jsonInputChange","onchange1":"updateButtonDisabled"}],
+splitter1: ["wm.Splitter", {"height":"100%","width":"4px"}, {}],
 panel1: ["wm.Panel", {"height":"100%","horizontalAlign":"left","verticalAlign":"top","width":"100%"}, {}, {
 jsonHtml: ["wm.Html", {"height":"100%","minDesktopHeight":15}, {}],
 panel2: ["wm.Panel", {"height":"48px","horizontalAlign":"left","layoutKind":"left-to-right","verticalAlign":"middle","width":"100%"}, {}, {
-conditionName: ["wm.SelectMenu", {"caption":"Condition Name","captionSize":"140px","dataField":"name","dataType":"com.genushealthdb.data.Nodegroup","dataValue":undefined,"displayField":"name","displayValue":"","restrictValues":false}, {"onchange":"updateButtonDisabled"}, {
+conditionName: ["wm.SelectMenu", {"caption":"Condition Name","captionSize":"140px","dataField":"name","dataType":"com.genushealthdb.data.NodeGroup","dataValue":undefined,"displayField":"name","displayValue":"","restrictValues":false}, {"onchange":"updateButtonDisabled"}, {
 binding: ["wm.Binding", {}, {}, {
 wire: ["wm.Wire", {"expression":undefined,"source":"conditionListSVar","targetProperty":"dataSet"}, {}]
 }]
