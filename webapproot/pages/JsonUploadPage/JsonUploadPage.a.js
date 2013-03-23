@@ -18,6 +18,11 @@ dojo.query(".HasChildren", this.jsonHtml.domNode).onclick(dojo.hitch(this, "onJs
 importJsonButtonClick: function(inSender) {
 try {
 var data = dojo.fromJson(this.jsonInput.getDataValue());
+var errors = this.sanitizeJson(data);
+if (errors) {
+app.alert("Error in Json: '" + errors + "' is not valid");
+return;
+}
 this.getNextNodeId.update();
 this.loadingDialog.show();
 } catch(e) {app.alert("Invalid JSON");}
@@ -70,6 +75,7 @@ this.addDispositionsLiveVariable.update();
 },
 /* Handle common errors when editing the json file */
 sanitizeJson: function(inData) {
+var hasErrors = false;
 for (var name in inData) {
 switch(name.toLowerCase()) {
 case "question":
@@ -91,7 +97,8 @@ delete inData.name;
 }
 if (inData.responses) {
 dojo.forEach(inData.responses, function(r) {
-this.sanitizeJson(r);
+var result = this.sanitizeJson(r);
+if (result) hasErrors = result;
 }, this);
 }
 break;
@@ -101,8 +108,11 @@ inData.actionCode = inData[name];
 delete inData.name;
 }
 break;
+default:
+hasErrors = name;
 }
 }
+return hasErrors;
 },
 addIds: function(inData, inId) {
 inData.nodeId = inId;

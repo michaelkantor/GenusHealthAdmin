@@ -20,6 +20,11 @@ dojo.declare("JsonUploadPage", wm.Page, {
     importJsonButtonClick: function(inSender) {
         try {
             var data = dojo.fromJson(this.jsonInput.getDataValue());
+            var errors = this.sanitizeJson(data);
+            if (errors) {
+                app.alert("Error in Json: '" + errors + "' is not valid");
+                return;
+            }
             this.getNextNodeId.update();
             this.loadingDialog.show();
         } catch(e) {app.alert("Invalid JSON");}        
@@ -76,6 +81,7 @@ dojo.declare("JsonUploadPage", wm.Page, {
     
     /* Handle common errors when editing the json file */
     sanitizeJson: function(inData) {
+        var hasErrors = false;
         for (var name in inData) {
             switch(name.toLowerCase()) {
                 case "question":
@@ -97,7 +103,8 @@ dojo.declare("JsonUploadPage", wm.Page, {
                     }
                     if (inData.responses) {
                         dojo.forEach(inData.responses, function(r) {
-                            this.sanitizeJson(r);
+                            var result = this.sanitizeJson(r);
+                            if (result) hasErrors = result;
                         }, this);
                     }
                     break;
@@ -107,8 +114,11 @@ dojo.declare("JsonUploadPage", wm.Page, {
                         delete inData.name;
                     }
                     break;
+                default:
+                    hasErrors = name;
             }
         }
+        return hasErrors;
     },
     addIds: function(inData, inId) {
         inData.nodeId = inId;
