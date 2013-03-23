@@ -21,6 +21,13 @@
         <parameter name="nodeId" typeRef="java.lang.Integer" isList="false"/>
         <return typeRef="com.genushealthdb.data.Node" isList="true"/>
     </operation>
+    <operation operationType="hqlquery" name="filterSessions">
+        <parameter name="version" typeRef="java.lang.String" isList="false"/>
+        <parameter name="after" typeRef="java.util.Date" isList="false"/>
+        <parameter name="before" typeRef="java.util.Date" isList="false"/>
+        <parameter name="patientId" typeRef="java.lang.String" isList="false"/>
+        <return typeRef="com.genushealthdb.data.UserSessions" isList="true"/>
+    </operation>
     <operation operationType="hqlquery" name="groupByDiagnosis">
         <parameter name="conditionType" typeRef="java.lang.String" isList="false"/>
         <parameter name="version" typeRef="java.lang.String" isList="false"/>
@@ -139,7 +146,7 @@
             <element name="question" typeRef="java.lang.String" isList="false" allowNull="true"/>
             <element name="createdAt" typeRef="java.util.Date" isList="false" allowNull="false"/>
             <element name="updatedAt" typeRef="java.util.Date" isList="false" allowNull="false"/>
-            <element name="parent_id" typeRef="java.lang.Integer" isList="true" allowNull="true"/>
+            <element name="parent_id" typeRef="java.lang.Integer" isList="false" allowNull="true"/>
             <element name="nodegroups" typeRef="com.genushealthdb.data.NodeGroup" isList="true" allowNull="true"/>
             <element name="usersessionss" typeRef="com.genushealthdb.data.UserSessions" isList="true" allowNull="true"/>
         </dataobject>

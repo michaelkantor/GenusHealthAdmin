@@ -644,7 +644,7 @@ wm.types = {
 					"fieldOrder": 5,
 					"fieldSubType": null,
 					"include": [],
-					"isList": true,
+					"isList": false,
 					"noChange": [],
 					"required": false,
 					"type": "java.lang.Integer"
@@ -1096,7 +1096,7 @@ dojo.declare("GenusHealthAdmin", wm.Application, {
 	"name": "", 
 	"phoneGapLoginPage": "Login", 
 	"phoneMain": "", 
-	"projectSubVersion": "Alpha41", 
+	"projectSubVersion": "Alpha42", 
 	"projectVersion": 1, 
 	"studioVersion": "6.5.3.Release", 
 	"tabletMain": "", 

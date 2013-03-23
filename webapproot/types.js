@@ -391,7 +391,7 @@ wm.types = {
 					"fieldOrder": 5,
 					"fieldSubType": null,
 					"include": [],
-					"isList": true,
+					"isList": false,
 					"noChange": [],
 					"required": false,
 					"type": "java.lang.Integer"

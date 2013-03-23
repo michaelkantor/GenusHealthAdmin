@@ -1,5 +1,22 @@
 {
 	"methods": [{
+		"name": "filterSessions",
+		"operationType": "hqlquery",
+		"parameters": [{
+			"name": "version",
+			"type": "java.lang.String"
+		}, {
+			"name": "after",
+			"type": "java.util.Date"
+		}, {
+			"name": "before",
+			"type": "java.util.Date"
+		}, {
+			"name": "patientId",
+			"type": "java.lang.String"
+		}],
+		"returnType": "[com.genushealthdb.data.UserSessions]"
+	}, {
 		"name": "getConditionList",
 		"operationType": "hqlquery",
 		"parameters": null,
