@@ -142,7 +142,7 @@ wire6: ["wm.Wire", {"source":"feedbackresponsesDojoGrid.selectedItem","targetId"
 }],
 feedbackresponseidEditor1: ["wm.Number", {"caption":"Feedbackresponseid","captionSize":"120px","changeOnKey":true,"dataValue":0,"desktopHeight":"26px","emptyValue":"zero","formField":"feedbackresponseid","height":"26px","readonly":true,"required":true,"showing":false,"width":"100%"}, {}],
 answerEditor1: ["wm.LargeTextArea", {"caption":"Answer","captionPosition":"left","captionSize":"120px","changeOnKey":true,"dataValue":"","emptyValue":"emptyString","formField":"answer","height":"100%","readonly":true,"required":true,"width":"100%"}, {}],
-feedbackquestionsLookup1: ["wm.Lookup", {"caption":"Feedbackquestions","captionSize":"120px","dataType":"com.genushealthdb.data.Feedbackquestions","desktopHeight":"26px","displayField":"question","formField":"feedbackquestions","height":"26px","readonly":true,"required":true,"showing":false,"width":"100%"}, {}, {
+feedbackquestionsLookup1: ["wm.Lookup", {"caption":"Feedbackquestions","captionSize":"120px","dataType":"com.genushealthdb.data.Feedbackquestions","desktopHeight":"26px","displayField":"feedbackquestionid","displayType":"Number","formField":"feedbackquestions","height":"26px","readonly":true,"required":true,"showing":false,"width":"100%"}, {}, {
 binding: ["wm.Binding", {}, {}, {
 dataFieldWire: ["wm.Wire", {"source":"feedbackquestionsLookup1.liveVariable","targetProperty":"dataSet"}, {}],
 wire: ["wm.Wire", {"expression":undefined,"source":"questionsGrid.selectedItem","targetProperty":"dataValue"}, {}]
