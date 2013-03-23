@@ -4,7 +4,7 @@ package com.genushealthdb.data.output;
 
 
 /**
- * Generated for query "groupByNodeId" on 03/22/2013 07:16:11
+ * Generated for query "groupByNodeId" on 03/22/2013 09:42:02
  * 
  */
 public class GroupByNodeIdRtnType {

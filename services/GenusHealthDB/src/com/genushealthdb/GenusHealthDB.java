@@ -1,9 +1,11 @@
 
 package com.genushealthdb;
 
+import java.util.Date;
 import java.util.List;
 import com.genushealthdb.data.Node;
 import com.genushealthdb.data.NodeGroup;
+import com.genushealthdb.data.UserSessions;
 import com.genushealthdb.data.output.GetJsonFilesByConditionTypeRtnType;
 import com.genushealthdb.data.output.GetMaxNodeIdRtnType;
 import com.genushealthdb.data.output.GetSessionVersionsRtnType;
@@ -23,7 +25,7 @@ import com.wavemaker.runtime.service.TypedServiceReturn;
 
 /**
  *  Operations for service "GenusHealthDB"
- *  03/22/2013 07:16:13
+ *  03/22/2013 09:42:03
  * 
  */
 @SuppressWarnings("unchecked")
@@ -52,6 +54,10 @@ public class GenusHealthDB
 
     public List<Node> getNodeById(Integer nodeId, PagingOptions pagingOptions) {
         return ((List<Node> ) dsMgr.invoke(taskMgr.getQueryTask(), (GenusHealthDBConstants.getNodeByIdQueryName), nodeId, pagingOptions));
+    }
+
+    public List<UserSessions> filterSessions(String version, Date after, Date before, String patientId, PagingOptions pagingOptions) {
+        return ((List<UserSessions> ) dsMgr.invoke(taskMgr.getQueryTask(), (GenusHealthDBConstants.filterSessionsQueryName), version, after, before, patientId, pagingOptions));
     }
 
     public List<GroupByDiagnosisRtnType> groupByDiagnosis(String conditionType, String version, PagingOptions pagingOptions) {

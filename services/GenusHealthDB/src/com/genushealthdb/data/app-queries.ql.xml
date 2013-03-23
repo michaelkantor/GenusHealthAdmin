@@ -45,4 +45,22 @@ GROUP BY  node.nodeId
     <query name="getSessionVersions">
         SELECT version as version from UserSessions group by version
     </query>
+    <query name="filterSessions">
+        <query-param name="version" type="java.lang.String"/>
+        <query-param name="after" type="java.util.Date"/>
+        <query-param name="before" type="java.util.Date"/>
+        <query-param name="patientId" type="java.lang.String"/>
+        From UserSessions WHERE
+(:version is NULL OR :version = version)
+
+AND     (:after is NULL OR :after &lt;= createdAt AND CONCAT(year(:after),&apos;-&apos;,month(:after),&apos;-&apos;,day(:after)) !=
+CONCAT(year(createdAt),&apos;-&apos;,month(createdAt),&apos;-&apos;,day(createdAt)))
+
+AND     (:before is NULL OR :before &gt; createdAt AND CONCAT(year(:before),&apos;-&apos;,month(:before),&apos;-&apos;,day(:before)) !=
+CONCAT(year(createdAt),&apos;-&apos;,month(createdAt),&apos;-&apos;,day(createdAt)))
+
+AND (:patientId is NULL OR :patientId = patientId)
+
+ORDER BY sessionId DESC
+    </query>
 </hibernate-mapping>
